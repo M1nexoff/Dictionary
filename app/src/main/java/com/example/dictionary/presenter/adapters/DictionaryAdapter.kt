@@ -12,18 +12,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionary.data.source.AppDatabase
 import com.example.dictionary.databinding.ItemFoundBinding
+import com.example.dictionary.domain.AppRepository
+import com.example.dictionary.domain.AppRepositoryImpl
 
 class DictionaryAdapter : RecyclerView.Adapter<DictionaryAdapter.WordViewHolder>() {
-    val dao = AppDatabase.init().dictionaryDao()
-    private var mCursor: Cursor = dao.getAll()
+    val appRepository: AppRepository = AppRepositoryImpl.getAppRepository()
+    private var mCursor: Cursor = appRepository.getAll()
     private var isDataValid = true
     var isUzbek = false
     var search = ""
             set(value){
                 field = value
-                if(value == ""){ mCursor = dao.getAll() }
-                else if (isUzbek){ mCursor = dao.getFromUzbek(value) }
-                else {mCursor = dao.getFromEnglish(value)}
+                if(value == ""){ mCursor = appRepository.getAll() }
+                else if (isUzbek){ mCursor = appRepository.getFromUzbek(value) }
+                else {mCursor = appRepository.getFromEnglish(value)}
                 notifyDataSetChanged()
             }
 

@@ -20,6 +20,10 @@ class AppRepositoryImpl : AppRepository{
         return wordDao.getFromEnglish(key)
     }
 
+    override fun getFromUzbek(key: String): Cursor {
+        return wordDao.getFromUzbek(key)
+    }
+
     override fun getAll(): Cursor {
         return wordDao.getAll()
     }
