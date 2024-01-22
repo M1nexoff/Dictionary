@@ -48,7 +48,6 @@ dependencies {
 
     // noinspection KaptUsageInsteadOfKsp
     kapt("androidx.room:room-compiler:$room_version")
-
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
     implementation("androidx.core:core-ktx:1.12.0")

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Dictionary</string>
+    <string name="speech_prompt"></string>
 </resources>
