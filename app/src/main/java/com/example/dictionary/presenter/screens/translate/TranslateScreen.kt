@@ -1,5 +1,6 @@
 package com.example.dictionary.presenter.screens.translate
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,7 +19,7 @@ class TranslateScreen: Fragment(R.layout.page_translate) {
     private lateinit var adapter: DictionaryAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = DictionaryAdapter()
+        adapter = DictionaryAdapter(requireContext())
         binding.recycler.adapter = adapter
         binding.language.setOnClickListener {
             if(adapter.isUzbek){
