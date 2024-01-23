@@ -51,4 +51,8 @@ class TranslateScreen: Fragment(R.layout.page_translate) {
             binding.search.clearFocus()
         }
     }
+    override fun onResume() {
+        super.onResume()
+        adapter.search = adapter.search
+    }
 }

@@ -62,9 +62,11 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
+            android:id="@+id/star"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/star"
+            app:layout_constraintBottom_toBottomOf="@+id/translation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.925"
             app:layout_constraintStart_toStartOf="parent"

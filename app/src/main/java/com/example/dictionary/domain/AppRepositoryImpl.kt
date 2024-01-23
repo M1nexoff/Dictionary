@@ -1,6 +1,7 @@
 package com.example.dictionary.domain
 
 import android.database.Cursor
+import com.example.dictionary.data.model.Stared
 import com.example.dictionary.data.source.AppDatabase
 
 class AppRepositoryImpl : AppRepository{
@@ -28,4 +29,23 @@ class AppRepositoryImpl : AppRepository{
         return wordDao.getAll()
     }
 
+    override fun getStared(id: Long): Stared {
+        return wordDao.getStared(id)
+    }
+
+    override fun getAllStared(): Cursor {
+        return wordDao.getAllStared()
+    }
+
+    override fun insertStared(data: Stared): Long {
+        return wordDao.insertStared(data)
+    }
+
+    override fun getStaredFromEnglish(key: String): Cursor {
+        return wordDao.getStaredFromEnglish(key)
+    }
+
+    override fun getStaredFromUzbek(key: String): Cursor {
+        return wordDao.getStaredFromUzbek(key)
+    }
 }

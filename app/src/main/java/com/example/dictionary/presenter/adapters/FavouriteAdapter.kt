@@ -18,21 +18,21 @@ import com.example.dictionary.domain.AppRepository
 import com.example.dictionary.domain.AppRepositoryImpl
 import java.util.*
 
-class DictionaryAdapter(private val context: Context) : RecyclerView.Adapter<DictionaryAdapter.WordViewHolder>(),
+class FavouriteAdapter(private val context: Context) : RecyclerView.Adapter<FavouriteAdapter.WordViewHolder>(),
     TextToSpeech.OnInitListener {
     private val appRepository: AppRepository = AppRepositoryImpl.getAppRepository()
-    private var mCursor: Cursor = appRepository.getAll()
+    private var mCursor: Cursor = appRepository.getAllStared()
     private var isDataValid = true
     var isUzbek = false
     var search = ""
         set(value) {
             field = value
             if (value == "") {
-                mCursor = appRepository.getAll()
+                mCursor = appRepository.getAllStared()
             } else if (isUzbek) {
-                mCursor = appRepository.getFromUzbek(value)
+                mCursor = appRepository.getStaredFromUzbek(value)
             } else {
-                mCursor = appRepository.getFromEnglish(value)
+                mCursor = appRepository.getStaredFromEnglish(value)
             }
             notifyDataSetChanged()
         }
@@ -41,8 +41,7 @@ class DictionaryAdapter(private val context: Context) : RecyclerView.Adapter<Dic
 
     inner class WordViewHolder(private val binding: ItemFoundBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(id: Long, english: String, uzbek: String,isF: Boolean) {
-            var isFavorite = isF
+        fun bind(id: Long, english: String, uzbek: String) {
             val text = SpannableString(english)
             text.setSpan(
                 ForegroundColorSpan(android.graphics.Color.BLUE),
@@ -54,7 +53,7 @@ class DictionaryAdapter(private val context: Context) : RecyclerView.Adapter<Dic
             binding.found.text = text
             binding.translation.text = uzbek
 
-            val starIcon = if (isFavorite) R.drawable.star_checked else R.drawable.star
+            val starIcon = R.drawable.star_checked
             binding.star.setImageResource(starIcon)
 
             binding.speaker.setOnClickListener {
@@ -62,10 +61,9 @@ class DictionaryAdapter(private val context: Context) : RecyclerView.Adapter<Dic
             }
 
             binding.star.setOnClickListener {
-                isFavorite = !isFavorite
-                val newFavoriteStatus = Stared(id,isF)
+                val newFavoriteStatus = Stared(id,false)
                 appRepository.insertStared(newFavoriteStatus)
-                binding.star.setImageResource(if (isFavorite) R.drawable.star_checked else R.drawable.star)
+                search = search
             }
         }
     }
@@ -87,12 +85,7 @@ class DictionaryAdapter(private val context: Context) : RecyclerView.Adapter<Dic
                     val id = it.getLong(it.getColumnIndex("id"))
                     val english = it.getString(it.getColumnIndex("english"))
                     val uzbek = it.getString(it.getColumnIndex("uzbek"))
-                    val isF = appRepository.getStared(id)
-                    if (isF==null) {
-                        holder.bind(id,uzbek,english,false)
-                    }else {
-                        holder.bind(id, uzbek, english,true)
-                    }
+                    holder.bind(id, uzbek, english)
                 }
             }
         } else {
@@ -101,12 +94,7 @@ class DictionaryAdapter(private val context: Context) : RecyclerView.Adapter<Dic
                     val id = it.getLong(it.getColumnIndex("id"))
                     val english = it.getString(it.getColumnIndex("english"))
                     val uzbek = it.getString(it.getColumnIndex("uzbek"))
-                    val isF = appRepository.getStared(id)
-                    if (isF==null) {
-                        holder.bind(id,english,uzbek,false)
-                    }else {
-                        holder.bind(id, english, uzbek,true)
-                    }
+                    holder.bind(id,english,uzbek)
                 }
             }
         }

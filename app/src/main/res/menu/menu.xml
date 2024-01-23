@@ -10,6 +10,6 @@
         android:title="Speak" />
     <item
         android:id="@+id/favourite"
-        android:icon="@drawable/star"
+        android:icon="@drawable/star_checked"
         android:title="Favourite" />
 </menu>

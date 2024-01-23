@@ -6,10 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.dictionary.data.dao.DictionaryDao
 import com.example.dictionary.data.model.Dictionary
+import com.example.dictionary.data.model.Stared
 
-@Database(entities = [Dictionary::class], version = 1, exportSchema = false)
+@Database(entities = [Dictionary::class,Stared::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun dictionaryDao(): DictionaryDao
+
 
     companion object {
         @Volatile
