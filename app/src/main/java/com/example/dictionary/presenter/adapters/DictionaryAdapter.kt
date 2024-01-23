@@ -52,7 +52,6 @@ class DictionaryAdapter(private val context: Context) : RecyclerView.Adapter<Dic
             binding.found.text = text
             binding.translation.text = uzbek
 
-            // Set the click listener for Text-to-Speech
             binding.speaker.setOnClickListener {
                 speakOut(uzbek)
             }
