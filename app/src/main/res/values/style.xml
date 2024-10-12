@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="okey" parent="Widget.Design.BottomNavigationView">
-        <item name="elevation">0dp</item>
-        <item name="height">56dp</item>
     </style>
 </resources>

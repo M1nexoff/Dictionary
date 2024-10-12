@@ -1,7 +1,10 @@
 package com.example.dictionary.data.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 @Entity(tableName = "dictionary")
 data class Dictionary(
@@ -18,5 +21,8 @@ data class Dictionary(
 
     val countable: String,
 
-    val is_favourite: Int // Change Boolean to Int
-)
+    val isStared: Int,
+
+    val lastAccessed: Long? = null
+
+): Serializable

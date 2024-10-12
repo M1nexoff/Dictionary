@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/translate"
-        android:icon="@drawable/translate"
-        android:title="Translate" />
+        android:id="@+id/bookmark"
+        android:icon="@drawable/bookmark_unused"
+        android:title="Bookmark" />
     <item
-        android:id="@+id/speak"
-        android:icon="@drawable/voice"
-        android:title="Speak" />
+        android:id="@+id/home"
+        android:icon="@drawable/home"
+        android:title="Home" />
     <item
-        android:id="@+id/favourite"
-        android:icon="@drawable/star_checked"
-        android:title="Favourite" />
+        android:id="@+id/history"
+        android:icon="@drawable/history"
+        android:title="History" />
 </menu>

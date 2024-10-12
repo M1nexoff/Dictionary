@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="#FFCD00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/nunito"
+            android:text="Bookmarks"
+            android:textColor="@color/white"
+            android:textFontWeight="800"
+            android:textSize="26dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/language"
+            android:layout_width="50dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/en"
+            android:layout_height="36dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
+<!--        <androidx.appcompat.widget.SearchView-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:id="@+id/search"-->
+<!--            android:visibility="invisible"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:background="@drawable/bg_oval"-->
+<!--            android:focusable="true"-->
+<!--            android:inputType="textPersonName"-->
+<!--            android:layout_marginHorizontal="24dp"-->
+<!--            app:closeIcon="@drawable/clear"-->
+<!--            app:iconifiedByDefault="false"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView"-->
+<!--            app:queryBackground="@android:color/transparent"-->
+<!--            android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"-->
+<!--            app:queryHint="Search words"-->
+<!--            app:searchIcon="@drawable/search"-->
+<!--            app:showDividers="middle"-->
+<!--            app:voiceIcon="@drawable/microphone" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="8dp"
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_word" />
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/empty_box"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout"
+        app:layout_constraintVertical_bias="0.326" />
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/nunito"
+        android:text="Here is empty now"
+        android:textColor="@color/yellow_dark"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="@+id/empty_box"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/empty_box"
+        app:layout_constraintTop_toBottomOf="@+id/empty_box" />
+</androidx.constraintlayout.widget.ConstraintLayout>

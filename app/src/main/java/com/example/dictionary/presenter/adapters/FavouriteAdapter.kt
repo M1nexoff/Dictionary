@@ -13,88 +13,93 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionary.R
 import com.example.dictionary.data.model.Stared
-import com.example.dictionary.databinding.ItemFoundBinding
+import com.example.dictionary.databinding.ItemWordBinding
 import com.example.dictionary.domain.AppRepository
 import com.example.dictionary.domain.AppRepositoryImpl
 import java.util.*
 
 class FavouriteAdapter(private val context: Context) : RecyclerView.Adapter<FavouriteAdapter.WordViewHolder>(),
     TextToSpeech.OnInitListener {
+    var onUpdate: ((Boolean) -> Unit)? = null
+    var onClick: ((data: com.example.dictionary.data.model.Dictionary)->Unit)? = null
     private val appRepository: AppRepository = AppRepositoryImpl.getAppRepository()
-    private var mCursor: Cursor = appRepository.getAllStared()
+    private var mCursor: Cursor? = null
     private var isDataValid = true
     var isUzbek = false
-    var search = ""
         set(value) {
-            field = value
-            if (value == "") {
-                mCursor = appRepository.getAllStared()
-            } else if (isUzbek) {
-                mCursor = appRepository.getStaredFromUzbek(value)
-            } else {
-                mCursor = appRepository.getStaredFromEnglish(value)
+            if (value){
+                appRepository.getStaredFromUzbek("") {
+                    updateCursor(it)
+                    field = value
+                }
+            }else{
+                appRepository.getStaredFromEnglish(""){
+                    updateCursor(it)
+                    field = value
+                }
             }
-            notifyDataSetChanged()
         }
+
+    private fun updateCursor(cursor: Cursor) {
+        mCursor?.close()
+        mCursor = cursor
+        if (mCursor?.count == 0) {
+            onUpdate?.invoke(true)
+        }else{
+            onUpdate?.invoke(false)
+        }
+        notifyDataSetChanged()
+    }
 
     private var tts: TextToSpeech = TextToSpeech(context, this)
 
-    inner class WordViewHolder(private val binding: ItemFoundBinding) :
+    inner class WordViewHolder(private val binding: ItemWordBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(id: Long, english: String, uzbek: String) {
+        fun bind(position: Int,id: Long, english: String, uzbek: String) {
             val text = SpannableString(english)
-            text.setSpan(
-                ForegroundColorSpan(android.graphics.Color.BLUE),
-                0,
-                if (search == "") 0 else search.length,
-                Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-            )
-
             binding.found.text = text
-            binding.translation.text = uzbek
-
-            val starIcon = R.drawable.star_checked
+            val starIcon = R.drawable.bookmark
             binding.star.setImageResource(starIcon)
-
-            binding.speaker.setOnClickListener {
-                speakOut(uzbek)
-            }
-
             binding.star.setOnClickListener {
-                val newFavoriteStatus = Stared(id,false)
-                appRepository.insertStared(newFavoriteStatus)
-                search = search
+                val newFavoriteStatus = Stared(id,0)
+                appRepository.insertStared(newFavoriteStatus,{})
+                isUzbek = isUzbek
+            }
+            binding.root.setOnClickListener {
+                appRepository.getWordById(id) {
+                    onClick?.invoke(it)
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
         return WordViewHolder(
-            ItemFoundBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun getItemCount(): Int = mCursor.count ?: 0
+    override fun getItemCount(): Int = mCursor?.count ?: 0
 
     @SuppressLint("Range")
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         if (!isDataValid) return
         if (isUzbek) {
             mCursor.let {
-                if (it.moveToPosition(position)) {
+                if (it!!.moveToPosition(position)) {
                     val id = it.getLong(it.getColumnIndex("id"))
                     val english = it.getString(it.getColumnIndex("english"))
                     val uzbek = it.getString(it.getColumnIndex("uzbek"))
-                    holder.bind(id, uzbek, english)
+                    holder.bind(position,id, uzbek, english)
                 }
             }
         } else {
             mCursor.let {
-                if (it.moveToPosition(position)) {
+                if (it!!.moveToPosition(position)) {
                     val id = it.getLong(it.getColumnIndex("id"))
                     val english = it.getString(it.getColumnIndex("english"))
                     val uzbek = it.getString(it.getColumnIndex("uzbek"))
-                    holder.bind(id,english,uzbek)
+                    holder.bind(position,id,english,uzbek)
                 }
             }
         }

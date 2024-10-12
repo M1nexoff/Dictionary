@@ -6,5 +6,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "stared")
 data class Stared(
     @PrimaryKey val id: Long,
-    var isStared: Boolean = false
+    var isStared: Int = 0
 )

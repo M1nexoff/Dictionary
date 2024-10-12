@@ -1,7 +1,10 @@
 package com.example.dictionary
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.dictionary.databinding.ActivityMainBinding
 import com.example.dictionary.presenter.MainScreen
@@ -14,7 +17,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction()
-            .add(R.id.main, MainScreen())
+            .add(R.id.container, MainScreen())
             .commit()
+    }
+}
+fun <T> runOnMainThread(callback: () -> T) {
+    Handler(Looper.getMainLooper()).post {
+        callback()
     }
 }
